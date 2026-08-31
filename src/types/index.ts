@@ -46,6 +46,8 @@ export interface Student {
   department: string;
   yearLevel: number;
   phoneNumber?: string;
+  gender?: 'MALE' | 'FEMALE';
+  dormInfo?: string;
   avatarUrl?: string;
   bio?: string;
   status: StudentStatus;
@@ -87,6 +89,11 @@ export interface SectionApplication {
   studentName: string;
   studentDept: string;
   studentYear: number;
+  gender: 'MALE' | 'FEMALE';
+  phoneNumber: string;
+  studentIdNumber?: string;
+  dormInfo?: string;
+  spiritualBackground?: string;
   motivation: string;
   skillsExperience?: string;
   experienceLevel: 'BEGINNER' | 'INTERMEDIATE' | 'EXPERIENCED';

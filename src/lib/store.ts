@@ -174,6 +174,14 @@ class FocusStore {
   // Applications
   public applyToSection(params: {
     sectionId: string;
+    studentName?: string;
+    studentDept?: string;
+    studentYear?: number;
+    gender?: 'MALE' | 'FEMALE';
+    phoneNumber?: string;
+    studentIdNumber?: string;
+    dormInfo?: string;
+    spiritualBackground?: string;
     motivation: string;
     skillsExperience?: string;
     experienceLevel: 'BEGINNER' | 'INTERMEDIATE' | 'EXPERIENCED';
@@ -202,9 +210,14 @@ class FocusStore {
       sectionName: sec.name,
       sectionIcon: sec.icon,
       studentId: student.id,
-      studentName: this.activePersona.name,
-      studentDept: student.department,
-      studentYear: student.yearLevel,
+      studentName: params.studentName || this.activePersona.name,
+      studentDept: params.studentDept || student.department,
+      studentYear: params.studentYear || student.yearLevel,
+      gender: params.gender || 'MALE',
+      phoneNumber: params.phoneNumber || '+251 91 000 0000',
+      studentIdNumber: params.studentIdNumber || student.studentIdNumber,
+      dormInfo: params.dormInfo || 'Main Campus',
+      spiritualBackground: params.spiritualBackground || 'DDU Fellowship Member',
       motivation: params.motivation,
       skillsExperience: params.skillsExperience,
       experienceLevel: params.experienceLevel,

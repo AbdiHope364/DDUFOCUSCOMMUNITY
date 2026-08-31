@@ -139,10 +139,16 @@ export default function MySectionsPage() {
                 </span>
               </div>
 
-              <div className="text-xs text-slate-600 space-y-1">
+              <div className="text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                <div className="flex flex-wrap items-center gap-3 text-slate-700 font-medium">
+                  <span>Applicant: <strong className="text-slate-900">{app.studentName}</strong></span>
+                  <span>• {app.studentDept} (Year {app.studentYear})</span>
+                  <span>• {app.gender === 'FEMALE' ? '👩 Female' : '👨 Male'}</span>
+                  <span>• Tel: {app.phoneNumber}</span>
+                </div>
                 <div><span className="font-semibold text-slate-700">Motivation:</span> &quot;{app.motivation}&quot;</div>
                 {app.skillsExperience && (
-                  <div><span className="font-semibold text-slate-700">Skills:</span> {app.skillsExperience}</div>
+                  <div><span className="font-semibold text-slate-700">Skills / Talents:</span> {app.skillsExperience}</div>
                 )}
                 <div>
                   <span className="font-semibold text-slate-700">Availability:</span> {app.availabilityDays.join(', ')}

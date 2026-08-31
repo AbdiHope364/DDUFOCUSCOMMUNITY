@@ -14,7 +14,12 @@ import {
   Search,
   MessageSquare,
   Shield,
-  Sparkles
+  Sparkles,
+  Phone,
+  Building,
+  GraduationCap,
+  Home,
+  User
 } from 'lucide-react';
 
 export default function AdminApplicationsPage() {
@@ -60,7 +65,7 @@ export default function AdminApplicationsPage() {
         <span>Back to Leadership Console</span>
       </Link>
 
-      {/* Header */}
+      {/* Header Banner */}
       <div className="bg-gradient-to-r from-amber-600 via-slate-900 to-blue-950 text-white rounded-3xl p-8 shadow-xl flex flex-wrap items-center justify-between gap-4">
         <div>
           <span className="px-3 py-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
@@ -70,7 +75,7 @@ export default function AdminApplicationsPage() {
             Section Membership Applications
           </h1>
           <p className="text-xs text-slate-300 mt-1">
-            Review student applicants, inspect their spiritual motivation and weekly availability, and grant section membership.
+            Review student applicants, inspect their spiritual motivation, academic department, phone contact, and availability.
           </p>
         </div>
 
@@ -132,12 +137,13 @@ export default function AdminApplicationsPage() {
           {applications.map((app) => (
             <div
               key={app.id}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+              className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
+                {/* Header Tag */}
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
-                    {app.sectionName}
+                  <span className="font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200 flex items-center gap-1.5">
+                    <span>{app.sectionName}</span>
                   </span>
                   <span
                     className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
@@ -152,32 +158,83 @@ export default function AdminApplicationsPage() {
                   </span>
                 </div>
 
-                <div>
-                  <h3 className="font-bold text-base text-slate-900">{app.studentName}</h3>
-                  <p className="text-xs text-slate-500">
-                    {app.studentDept} • Year {app.studentYear} • Experience: <span className="font-semibold text-slate-700 capitalize">{app.experienceLevel.toLowerCase()}</span>
-                  </p>
+                {/* Applicant Identity Card */}
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-black text-base text-slate-900">{app.studentName}</h3>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${app.gender === 'FEMALE' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
+                        {app.gender === 'FEMALE' ? '👩 Female' : '👨 Male'}
+                      </span>
+                    </div>
+
+                    {app.studentIdNumber && (
+                      <span className="text-[11px] font-mono font-bold bg-white px-2 py-0.5 rounded border border-slate-300 text-slate-700">
+                        {app.studentIdNumber}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 pt-1">
+                    <div className="flex items-center gap-1.5">
+                      <GraduationCap className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span className="font-semibold text-slate-800 truncate">{app.studentDept}</span>
+                      <span className="text-[10px] bg-slate-200 px-1.5 py-0.2 rounded font-bold">Yr {app.studentYear}</span>
+                    </div>
+
+                    {app.phoneNumber && (
+                      <a
+                        href={`tel:${app.phoneNumber}`}
+                        className="flex items-center gap-1.5 text-blue-700 font-bold hover:underline"
+                      >
+                        <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>{app.phoneNumber}</span>
+                      </a>
+                    )}
+
+                    {app.dormInfo && (
+                      <div className="flex items-center gap-1.5 text-slate-600 truncate">
+                        <Building className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="truncate">{app.dormInfo}</span>
+                      </div>
+                    )}
+
+                    {app.spiritualBackground && (
+                      <div className="flex items-center gap-1.5 text-slate-600 truncate">
+                        <Home className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="truncate">{app.spiritualBackground}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs space-y-2">
+                {/* Motivation & Skills */}
+                <div className="bg-white p-3.5 rounded-2xl border border-slate-200 text-xs space-y-2">
                   <div>
-                    <span className="font-bold text-slate-700">Motivation:</span>
-                    <p className="text-slate-600 italic mt-0.5 leading-relaxed">&ldquo;{app.motivation}&rdquo;</p>
+                    <span className="font-bold text-slate-800">Spiritual Motivation:</span>
+                    <p className="text-slate-600 italic mt-0.5 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                      &ldquo;{app.motivation}&rdquo;
+                    </p>
                   </div>
 
                   {app.skillsExperience && (
                     <div>
-                      <span className="font-bold text-slate-700">Skills / Background:</span>
+                      <span className="font-bold text-slate-800">Skills & Background:</span>
                       <p className="text-slate-600 mt-0.5">{app.skillsExperience}</p>
                     </div>
                   )}
 
-                  <div>
-                    <span className="font-bold text-slate-700">Availability Days:</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+                    <div>
+                      <span className="text-slate-500 font-semibold">Experience Tier: </span>
+                      <span className="font-bold text-indigo-700 capitalize">{app.experienceLevel.toLowerCase()}</span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-1">
+                      <span className="text-slate-500 font-semibold mr-1">Available:</span>
                       {app.availabilityDays.map((d) => (
-                        <span key={d} className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[10px] font-medium text-slate-700">
-                          {d}
+                        <span key={d} className="px-1.5 py-0.5 bg-blue-50 text-blue-800 border border-blue-200 rounded text-[10px] font-bold">
+                          {d.substring(0, 3)}
                         </span>
                       ))}
                     </div>
@@ -186,7 +243,7 @@ export default function AdminApplicationsPage() {
 
                 {app.reviewerNotes && (
                   <div className="text-xs text-blue-900 bg-blue-50 p-2.5 rounded-xl border border-blue-200">
-                    <span className="font-bold">Review Note:</span> &quot;{app.reviewerNotes}&quot;
+                    <span className="font-bold">Reviewer Feedback:</span> &quot;{app.reviewerNotes}&quot;
                   </div>
                 )}
               </div>
@@ -197,22 +254,22 @@ export default function AdminApplicationsPage() {
                   <button
                     onClick={() => {
                       setSelectedApp(app);
-                      setNotes('Welcome to the ministry team! Vocal/interview requirements met.');
+                      setNotes(`Welcome to ${app.sectionName}, ${app.studentName}! Looking forward to serving with you.`);
                     }}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <CheckCircle2 className="w-4 h-4" />
                     <span>Approve Application</span>
                   </button>
 
                   <button
                     onClick={() => {
                       setSelectedApp(app);
-                      setNotes('Thank you for applying. Currently at maximum capacity.');
+                      setNotes('Thank you for your application. Ministry capacity is currently full for this term.');
                     }}
-                    className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs rounded-xl transition flex items-center gap-1"
+                    className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs rounded-xl transition flex items-center gap-1.5"
                   >
-                    <XCircle className="w-3.5 h-3.5" />
+                    <XCircle className="w-4 h-4" />
                     <span>Reject</span>
                   </button>
                 </div>
@@ -225,19 +282,22 @@ export default function AdminApplicationsPage() {
       {/* Review Confirmation Modal */}
       {selectedApp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white text-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 space-y-4">
+          <div className="bg-white text-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 space-y-4">
             <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Shield className="w-5 h-5 text-blue-600" />
-              <span>Review Application for {selectedApp.studentName}</span>
+              <span>Review Application: {selectedApp.studentName}</span>
             </h3>
 
-            <div className="text-xs text-slate-600 space-y-1">
-              <div>Target Section: <span className="font-bold text-slate-800">{selectedApp.sectionName}</span></div>
+            <div className="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <div>Target Section: <span className="font-bold text-blue-700">{selectedApp.sectionName}</span></div>
+              <div>Department: <span className="font-semibold text-slate-800">{selectedApp.studentDept} (Year {selectedApp.studentYear})</span></div>
+              <div>Contact Phone: <span className="font-semibold text-slate-800">{selectedApp.phoneNumber}</span></div>
+              <div>Dorm / Block: <span className="font-semibold text-slate-800">{selectedApp.dormInfo || 'Main Campus'}</span></div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Reviewer Feedback / Welcome Note to Student
+                Leader Note / Remarks (Sent directly to Student)
               </label>
               <textarea
                 rows={3}
@@ -273,4 +333,3 @@ export default function AdminApplicationsPage() {
     </div>
   );
 }
-
