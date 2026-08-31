@@ -7,9 +7,7 @@ import {
   Calendar,
   Clock,
   MapPin,
-  Users,
   Search,
-  Filter,
   CheckCircle2,
   Bookmark
 } from 'lucide-react';
@@ -21,6 +19,8 @@ export default function EventsPage() {
   const [rsvpdEvents, setRsvpdEvents] = useState<string[]>([]);
 
   useEffect(() => {
+    store.initClient();
+    setEvents([...store.events]);
     const unsub = store.subscribe(() => {
       setEvents([...store.events]);
     });
@@ -65,13 +65,13 @@ export default function EventsPage() {
       {/* Search & Filter Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search programs by title or ministry..."
-            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition"
           />
         </div>
 
@@ -81,7 +81,7 @@ export default function EventsPage() {
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
               filterAudience === 'ALL'
                 ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
             }`}
           >
             All Events
@@ -91,7 +91,7 @@ export default function EventsPage() {
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
               filterAudience === 'PUBLIC'
                 ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
             }`}
           >
             Open to All Students
@@ -101,7 +101,7 @@ export default function EventsPage() {
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
               filterAudience === 'MEMBERS_ONLY'
                 ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
             }`}
           >
             Section Members Only
@@ -116,43 +116,43 @@ export default function EventsPage() {
           return (
             <div
               key={evt.id}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+              className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200">
+                  <span className="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800">
                     {evt.sectionName || 'General Fellowship'}
                   </span>
                   <span
                     className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                       evt.audience === 'PUBLIC'
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-purple-100 text-purple-800'
+                        ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                        : 'bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300'
                     }`}
                   >
                     {evt.audience === 'PUBLIC' ? 'Public Gathering' : 'Members Only'}
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
                   {evt.title}
                 </h3>
 
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {evt.description}
                 </p>
 
                 {evt.speakerName && (
-                  <div className="text-xs text-slate-700 font-medium pt-1">
-                    <span className="text-slate-400">Speaker/Lead:</span> {evt.speakerName}
+                  <div className="text-xs text-slate-700 dark:text-slate-300 font-medium pt-1">
+                    <span className="text-slate-400 dark:text-slate-500">Speaker/Lead:</span> {evt.speakerName}
                   </div>
                 )}
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
-                <div className="space-y-1 text-slate-500">
-                  <div className="flex items-center gap-1.5 font-medium text-slate-700">
-                    <Clock className="w-3.5 h-3.5 text-blue-600" />
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="space-y-1 text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
+                    <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                     <span>
                       {new Date(evt.startTime).toLocaleDateString('en-US', {
                         weekday: 'short',
@@ -173,7 +173,7 @@ export default function EventsPage() {
                   onClick={() => handleRSVP(evt.id)}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
                     isRsvpd
-                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                      ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
                       : 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
                   }`}
                 >
@@ -197,4 +197,3 @@ export default function EventsPage() {
     </div>
   );
 }
-

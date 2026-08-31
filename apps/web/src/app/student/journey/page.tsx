@@ -3,14 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { JourneyCard } from '../../../components/journey-card';
-import { Trophy, ArrowLeft, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 
 export default function StudentJourneyPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Link
         href="/student"
-        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Student Hub</span>
@@ -33,4 +33,3 @@ export default function StudentJourneyPage() {
     </div>
   );
 }
-

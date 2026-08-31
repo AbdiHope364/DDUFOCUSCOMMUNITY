@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { store } from '../../lib/store';
 import { SectionCard } from '../../components/section-card';
 import { Section } from '../../types';
-import { Layers, Search, PlusCircle, Sparkles } from 'lucide-react';
+import { Layers, Search, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SectionsPage() {
@@ -12,6 +12,8 @@ export default function SectionsPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    store.initClient();
+    setSections([...store.sections]);
     const unsub = store.subscribe(() => {
       setSections([...store.sections]);
     });
@@ -52,18 +54,18 @@ export default function SectionsPage() {
       {/* Search Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sections (e.g. Choir, Evangelism, Charity)..."
-            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition"
           />
         </div>
 
-        <div className="text-xs text-slate-500 font-medium">
-          Showing <span className="font-bold text-slate-800">{filtered.length}</span> active sections
+        <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+          Showing <span className="font-bold text-slate-900 dark:text-white">{filtered.length}</span> active sections
         </div>
       </div>
 
@@ -76,4 +78,3 @@ export default function SectionsPage() {
     </div>
   );
 }
-

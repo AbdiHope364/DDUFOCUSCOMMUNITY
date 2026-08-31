@@ -8,19 +8,16 @@ import {
   BookOpen,
   Calendar,
   Search,
-  Sparkles,
-  Heart,
-  Target,
-  ArrowRight,
-  Filter
+  Sparkles
 } from 'lucide-react';
 
 export default function DailyWordPage() {
   const [dailyWords, setDailyWords] = useState<DailyWord[]>(store.dailyWords);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedWord, setSelectedWord] = useState<DailyWord>(store.getTodayWord().word);
 
   useEffect(() => {
+    store.initClient();
+    setDailyWords([...store.dailyWords]);
     const unsub = store.subscribe(() => {
       setDailyWords([...store.dailyWords]);
     });
@@ -53,28 +50,28 @@ export default function DailyWordPage() {
 
       {/* Featured Spotlight */}
       <div className="space-y-3">
-        <div className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+        <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
           <Sparkles className="w-4 h-4 text-amber-500" /> Featured Active Devotional
         </div>
         <DailyWordCard />
       </div>
 
       {/* Search & Archive Grid */}
-      <div className="space-y-6 pt-6 border-t border-slate-200">
+      <div className="space-y-6 pt-6 border-t border-slate-200 dark:border-slate-800">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
-            <h3 className="font-bold text-lg text-slate-900">Devotional Archive Library</h3>
-            <p className="text-xs text-slate-500">Browse scheduled and published daily words</p>
+            <h3 className="font-bold text-lg text-slate-900 dark:text-white">Devotional Archive Library</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Browse scheduled and published daily words</p>
           </div>
 
           <div className="relative max-w-md w-full">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by topic, scripture, or keywords (e.g. Faith, Joshua)..."
-              className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+              className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition"
             />
           </div>
         </div>
@@ -83,38 +80,38 @@ export default function DailyWordPage() {
           {filteredWords.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
+              className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4"
             >
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-500">
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1 font-mono text-[11px]">
-                    <Calendar className="w-3 h-3 text-blue-600" /> {item.publishDate}
+                    <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" /> {item.publishDate}
                   </span>
                   <span
                     className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                       item.status === 'PUBLISHED'
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-amber-100 text-amber-800'
+                        ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                        : 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300'
                     }`}
                   >
                     {item.status}
                   </span>
                 </div>
 
-                <h4 className="font-bold text-sm text-slate-900 leading-snug">
+                <h4 className="font-bold text-sm text-slate-900 dark:text-white leading-snug">
                   {item.title}
                 </h4>
 
-                <div className="text-xs font-semibold text-blue-700">
+                <div className="text-xs font-semibold text-blue-600 dark:text-blue-400">
                   {item.scriptureReference}
                 </div>
 
-                <blockquote className="text-xs text-slate-600 line-clamp-3 italic bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                <blockquote className="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 italic bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-100 dark:border-slate-700">
                   &ldquo;{item.verseText}&rdquo;
                 </blockquote>
               </div>
 
-              <div className="pt-2 border-t border-slate-100 text-xs text-slate-500 line-clamp-2">
+              <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
                 {item.reflection}
               </div>
             </div>
@@ -124,4 +121,3 @@ export default function DailyWordPage() {
     </div>
   );
 }
-

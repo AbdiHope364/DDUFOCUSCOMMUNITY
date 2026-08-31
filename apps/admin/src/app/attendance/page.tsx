@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { store } from '@/lib/store';
 import { QRGenerator } from '@/components/qr-generator';
-import { Event } from '@/types';
-import { QrCode, ArrowLeft, Calendar, Users, Play, Sparkles } from 'lucide-react';
+import { QrCode, ArrowLeft } from 'lucide-react';
 
 export default function AdminAttendancePage() {
   const [, setRerender] = useState(0);
   const [selectedEventId, setSelectedEventId] = useState<string>(store.events[0].id);
 
   useEffect(() => {
+    store.initClient();
     const unsub = store.subscribe(() => setRerender((v) => v + 1));
     return unsub;
   }, []);
@@ -21,11 +21,11 @@ export default function AdminAttendancePage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Link
-        href="/admin"
-        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+        href="/"
+        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back to Leadership Console</span>
+        <span>Back to Console Overview</span>
       </Link>
 
       {/* Header */}
@@ -63,4 +63,3 @@ export default function AdminAttendancePage() {
     </div>
   );
 }
-

@@ -61,7 +61,6 @@ export function Footer() {
               <span>Pastoral Care & Counseling Help</span>
             </Link>
 
-            <ThemeToggle showLabel={true} />
           </div>
         </div>
 

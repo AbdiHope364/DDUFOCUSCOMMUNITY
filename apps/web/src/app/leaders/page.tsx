@@ -1,10 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { store } from '../../lib/store';
-import { ShieldCheck, Mail, Users, Award, Flame } from 'lucide-react';
+import { ShieldCheck, Mail, Award } from 'lucide-react';
 
 export default function LeadersPage() {
+  const [, setRerender] = useState(0);
+
+  useEffect(() => {
+    store.initClient();
+    const unsub = store.subscribe(() => setRerender((v) => v + 1));
+    return unsub;
+  }, []);
+
   const leaders = store.personas.filter((p) => p.role !== 'STUDENT');
 
   return (
@@ -27,13 +35,13 @@ export default function LeadersPage() {
         {leaders.map((leader) => (
           <div
             key={leader.id}
-            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition text-center p-6 space-y-4"
+            className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition text-center p-6 space-y-4"
           >
             <div className="relative w-24 h-24 mx-auto">
               <img
                 src={leader.avatar}
                 alt={leader.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow"
+                className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 dark:border-blue-900/60 shadow"
               />
               <div className="absolute bottom-0 right-0 p-1.5 rounded-full bg-blue-600 text-white shadow">
                 <ShieldCheck className="w-3.5 h-3.5" />
@@ -41,16 +49,16 @@ export default function LeadersPage() {
             </div>
 
             <div>
-              <h3 className="font-bold text-base text-slate-900">{leader.name}</h3>
-              <p className="text-xs font-semibold text-blue-700 mt-0.5">{leader.title}</p>
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">{leader.name}</h3>
+              <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">{leader.title}</p>
               {leader.studentProfile && (
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
                   {leader.studentProfile.department}, Year {leader.studentProfile.yearLevel}
                 </p>
               )}
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-center gap-2 text-xs text-slate-500">
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
               <Mail className="w-3.5 h-3.5 text-slate-400" />
               <span className="truncate">{leader.email}</span>
             </div>
@@ -60,4 +68,3 @@ export default function LeadersPage() {
     </div>
   );
 }
-

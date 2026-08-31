@@ -3,17 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { store } from '../../../lib/store';
-import { VolunteerLog } from '../../../types';
 import { Certificate } from '../../../components/certificate';
 import {
   Heart,
   Award,
   PlusCircle,
-  CheckCircle2,
   Clock,
-  Calendar,
   ArrowLeft,
-  FileText
+  X
 } from 'lucide-react';
 
 export default function StudentVolunteersPage() {
@@ -28,6 +25,7 @@ export default function StudentVolunteersPage() {
   const [selectedSection, setSelectedSection] = useState('sec-charity');
 
   useEffect(() => {
+    store.initClient();
     const unsub = store.subscribe(() => setRerender((v) => v + 1));
     return unsub;
   }, []);
@@ -59,7 +57,7 @@ export default function StudentVolunteersPage() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Link
         href="/student"
-        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Student Hub</span>
@@ -96,45 +94,45 @@ export default function StudentVolunteersPage() {
       </div>
 
       {/* Service Hours History Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-100">
-          <h3 className="font-bold text-slate-900 uppercase tracking-wider">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 dark:border-slate-800">
+          <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider">
             Logged Volunteer Activities ({myLogs.length})
           </h3>
-          <span className="text-slate-400 text-[11px]">Reviewed by Charity Ministry Lead</span>
+          <span className="text-slate-400 dark:text-slate-500 text-[11px]">Reviewed by Charity Ministry Lead</span>
         </div>
 
         <div className="space-y-3">
           {myLogs.map((log) => (
             <div
               key={log.id}
-              className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-4 text-xs"
+              className="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 flex flex-wrap items-center justify-between gap-4 text-xs"
             >
               <div className="space-y-1 max-w-lg">
-                <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <div className="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
                   <span>{log.activityName}</span>
                   <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                       log.isVerified
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-amber-100 text-amber-800'
+                        ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                        : 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300'
                     }`}
                   >
                     {log.isVerified ? 'Verified ✓' : '🟡 Pending Verification'}
                   </span>
                 </div>
-                <p className="text-slate-600 text-xs leading-relaxed">{log.description}</p>
-                <div className="text-[11px] text-slate-400 flex items-center gap-2">
+                <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">{log.description}</p>
+                <div className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-2">
                   <span>Date: {log.serviceDate}</span>
                   {log.verifiedBy && (
-                    <span className="text-emerald-700 font-semibold">• Approved by {log.verifiedBy}</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-semibold">• Approved by {log.verifiedBy}</span>
                   )}
                 </div>
               </div>
 
               <div className="text-right">
-                <div className="text-lg font-black text-slate-900">{log.hoursServed.toFixed(1)} hrs</div>
-                <span className="text-[10px] text-slate-500 uppercase">Credit</span>
+                <div className="text-lg font-black text-slate-900 dark:text-white">{log.hoursServed.toFixed(1)} hrs</div>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Credit</span>
               </div>
             </div>
           ))}
@@ -143,10 +141,10 @@ export default function StudentVolunteersPage() {
 
       {/* Printable Certificate Section */}
       {totalHours > 0 && student && (
-        <div className="space-y-4 pt-6 border-t border-slate-200">
+        <div className="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-amber-600" />
-            <h2 className="font-bold text-lg text-slate-900">Your Official Fellowship Certificate</h2>
+            <Award className="w-5 h-5 text-amber-500" />
+            <h2 className="font-bold text-lg text-slate-900 dark:text-white">Your Official Fellowship Certificate</h2>
           </div>
           <Certificate
             studentName={activePersona.name}
@@ -159,88 +157,99 @@ export default function StudentVolunteersPage() {
 
       {/* Log Hours Modal */}
       {showLogModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white text-slate-900 rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 space-y-4">
-            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Heart className="w-5 h-5 text-rose-600" />
-              <span>Log Volunteer / Service Hours</span>
-            </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Heart className="w-5 h-5 text-rose-600 dark:text-rose-400" />
+                <span>Log Volunteer / Service Hours</span>
+              </h3>
+              <button
+                onClick={() => setShowLogModal(false)}
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-3 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Activity Name *</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Activity Name *</label>
                 <input
                   type="text"
                   required
                   value={activityName}
                   onChange={(e) => setActivityName(e.target.value)}
                   placeholder="e.g. Hospital Visitation, Campus Clean-up, Tutoring"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Hours Served *</label>
+                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Hours Served *</label>
                   <input
                     type="number"
-                    step="0.5"
                     min="0.5"
+                    step="0.5"
                     required
                     value={hoursServed}
-                    onChange={(e) => setHoursServed(parseFloat(e.target.value))}
-                    className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                    onChange={(e) => setHoursServed(Number(e.target.value))}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:outline-none"
                   />
                 </div>
+
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Service Date *</label>
+                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Service Date *</label>
                   <input
                     type="date"
                     required
                     value={serviceDate}
                     onChange={(e) => setServiceDate(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Ministry Section</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Ministry Section Affiliation</label>
                 <select
                   value={selectedSection}
                   onChange={(e) => setSelectedSection(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:outline-none"
                 >
                   {store.sections.map((s) => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Description / Summary</label>
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Description / Notes</label>
                 <textarea
-                  rows={2}
+                  rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Briefly describe what you did..."
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                  placeholder="Describe your volunteer contribution..."
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
 
-              <div className="pt-3 border-t border-slate-100 flex justify-end gap-2">
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowLogModal(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl"
+                  className="px-4 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md"
+                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow transition"
                 >
-                  Save & Submit for Review
+                  Submit Hours
                 </button>
               </div>
             </form>
@@ -250,4 +259,3 @@ export default function StudentVolunteersPage() {
     </div>
   );
 }
-

@@ -49,9 +49,9 @@ export function SectionCard({ section }: SectionCardProps) {
 
   return (
     <>
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-1">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-1">
         {/* Cover Image Banner */}
-        <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+        <div className="relative h-44 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
           {section.coverImageUrl ? (
             <img
               src={section.coverImageUrl}
@@ -84,20 +84,20 @@ export function SectionCard({ section }: SectionCardProps) {
 
         {/* Content Body */}
         <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
             {section.description}
           </p>
 
-          <div className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-500">
+          <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
             {section.leaderName && (
-              <div className="flex items-center gap-1.5 font-medium text-slate-700">
-                <span className="text-[11px] uppercase tracking-wider text-slate-400">Leader:</span>
-                <span className="text-blue-700">{section.leaderName}</span>
+              <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
+                <span className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500">Leader:</span>
+                <span className="text-blue-600 dark:text-blue-400 font-bold">{section.leaderName}</span>
               </div>
             )}
             {section.meetingSchedule && (
               <div className="flex items-center gap-1.5 truncate">
-                <Calendar className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                 <span className="truncate">{section.meetingSchedule}</span>
               </div>
             )}
@@ -113,7 +113,7 @@ export function SectionCard({ section }: SectionCardProps) {
           <div className="pt-3 grid grid-cols-2 gap-2">
             <Link
               href={`/sections/${section.slug}`}
-              className="py-2 px-3 text-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition flex items-center justify-center gap-1"
+              className="py-2 px-3 text-center rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition flex items-center justify-center gap-1"
             >
               <span>Learn More</span>
               <ArrowRight className="w-3 h-3" />
@@ -139,4 +139,3 @@ export function SectionCard({ section }: SectionCardProps) {
     </>
   );
 }
-

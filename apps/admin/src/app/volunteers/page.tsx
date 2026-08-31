@@ -3,22 +3,18 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { store } from '@/lib/store';
-import { VolunteerLog } from '@/types';
 import {
   Heart,
   CheckCircle2,
   Clock,
-  ArrowLeft,
-  Calendar,
-  Award,
-  Filter,
-  Shield
+  ArrowLeft
 } from 'lucide-react';
 
 export default function AdminVolunteersPage() {
   const [, setRerender] = useState(0);
 
   useEffect(() => {
+    store.initClient();
     const unsub = store.subscribe(() => setRerender((v) => v + 1));
     return unsub;
   }, []);
@@ -34,11 +30,11 @@ export default function AdminVolunteersPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Link
-        href="/admin"
-        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+        href="/"
+        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back to Leadership Console</span>
+        <span>Back to Console Overview</span>
       </Link>
 
       {/* Header Banner */}
@@ -62,15 +58,15 @@ export default function AdminVolunteersPage() {
       </div>
 
       {/* Pending Logs Queue */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between text-xs pb-3 border-b border-slate-100">
-          <h3 className="font-bold text-slate-900 uppercase tracking-wider text-rose-700 flex items-center gap-1.5">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between text-xs pb-3 border-b border-slate-100 dark:border-slate-800">
+          <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
             <Clock className="w-4 h-4" /> Pending Submissions ({pendingLogs.length})
           </h3>
         </div>
 
         {pendingLogs.length === 0 ? (
-          <p className="text-xs text-slate-500 py-6 text-center">
+          <p className="text-xs text-slate-500 dark:text-slate-400 py-6 text-center">
             All submitted volunteer logs have been verified!
           </p>
         ) : (
@@ -78,21 +74,21 @@ export default function AdminVolunteersPage() {
             {pendingLogs.map((log) => (
               <div
                 key={log.id}
-                className="p-4 rounded-xl bg-rose-50/40 border border-rose-200 flex flex-wrap items-center justify-between gap-4 text-xs"
+                className="p-4 rounded-2xl bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/60 flex flex-wrap items-center justify-between gap-4 text-xs"
               >
                 <div className="space-y-1 max-w-lg">
-                  <div className="font-bold text-slate-900 text-sm">{log.studentName}</div>
-                  <div className="font-semibold text-rose-800">{log.activityName}</div>
-                  <p className="text-slate-600 leading-relaxed">{log.description}</p>
-                  <div className="text-[11px] text-slate-400">
+                  <div className="font-bold text-slate-900 dark:text-white text-sm">{log.studentName}</div>
+                  <div className="font-semibold text-rose-700 dark:text-rose-300">{log.activityName}</div>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{log.description}</p>
+                  <div className="text-[11px] text-slate-400 dark:text-slate-500">
                     Service Date: {log.serviceDate} • Submitted on {new Date(log.createdAt).toLocaleDateString()}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <div className="text-xl font-black text-slate-900">{log.hoursServed.toFixed(1)} hrs</div>
-                    <div className="text-[10px] text-slate-400 uppercase font-bold">Claimed</div>
+                    <div className="text-xl font-black text-slate-900 dark:text-white">{log.hoursServed.toFixed(1)} hrs</div>
+                    <div className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-bold">Claimed</div>
                   </div>
 
                   <button
@@ -110,9 +106,9 @@ export default function AdminVolunteersPage() {
       </div>
 
       {/* Verified Logs History */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between text-xs pb-3 border-b border-slate-100">
-          <h3 className="font-bold text-slate-900 uppercase tracking-wider text-emerald-700 flex items-center gap-1.5">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between text-xs pb-3 border-b border-slate-100 dark:border-slate-800">
+          <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4" /> Verified Service History ({verifiedLogs.length})
           </h3>
         </div>
@@ -121,16 +117,16 @@ export default function AdminVolunteersPage() {
           {verifiedLogs.map((log) => (
             <div
               key={log.id}
-              className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs"
+              className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2 text-xs"
             >
               <div>
-                <span className="font-bold text-slate-900">{log.studentName}</span>
-                <span className="text-slate-500"> — {log.activityName}</span>
-                <div className="text-[10px] text-emerald-700 font-medium mt-0.5">
+                <span className="font-bold text-slate-900 dark:text-white">{log.studentName}</span>
+                <span className="text-slate-500 dark:text-slate-400"> — {log.activityName}</span>
+                <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5">
                   ✓ Verified by {log.verifiedBy}
                 </div>
               </div>
-              <span className="font-mono font-bold text-slate-800 bg-white px-2 py-0.5 rounded border border-slate-200">
+              <span className="font-mono font-bold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700">
                 {log.hoursServed.toFixed(1)} hrs
               </span>
             </div>
@@ -140,4 +136,3 @@ export default function AdminVolunteersPage() {
     </div>
   );
 }
-

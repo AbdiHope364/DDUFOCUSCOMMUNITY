@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { store } from '../../../lib/store';
-import { SectionApplication, SectionMember } from '../../../types';
-import { Users, Clock, MapPin, CheckCircle2, AlertCircle, PlusCircle, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Users, Clock, MapPin, CheckCircle2, PlusCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function MySectionsPage() {
   const [, setRerender] = useState(0);
 
   useEffect(() => {
+    store.initClient();
     const unsub = store.subscribe(() => setRerender((v) => v + 1));
     return unsub;
   }, []);
@@ -22,7 +22,7 @@ export default function MySectionsPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Link
         href="/student"
-        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-blue-600 transition"
+        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Student Hub</span>
@@ -52,15 +52,15 @@ export default function MySectionsPage() {
 
       {/* Active Memberships */}
       <div className="space-y-4">
-        <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider text-xs">
+        <h2 className="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider text-xs">
           Active Section Rosters ({myMemberships.length})
         </h2>
 
         {myMemberships.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-3">
-            <Users className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="font-bold text-sm text-slate-800">No active memberships yet</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-3">
+            <Users className="w-10 h-10 text-slate-300 dark:text-slate-600 mx-auto" />
+            <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">No active memberships yet</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
               Once a section leader approves your application, your active section cards will appear here.
             </p>
           </div>
@@ -71,19 +71,19 @@ export default function MySectionsPage() {
               return (
                 <div
                   key={mem.id}
-                  className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4"
+                  className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-base text-slate-900">{mem.sectionName}</h3>
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold flex items-center gap-1">
+                    <h3 className="font-bold text-base text-slate-900 dark:text-white">{mem.sectionName}</h3>
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> Approved Member
                     </span>
                   </div>
 
                   {sec && (
-                    <div className="space-y-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-100 dark:border-slate-700">
                       <div className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-blue-600" />
+                        <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                         <span>{sec.meetingSchedule || 'Fridays 6:00 PM'}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
@@ -94,12 +94,12 @@ export default function MySectionsPage() {
                   )}
 
                   <div className="pt-2 flex justify-between items-center text-xs">
-                    <span className="text-slate-400 text-[11px]">
+                    <span className="text-slate-400 dark:text-slate-500 text-[11px]">
                       Joined on {new Date(mem.joinedAt).toLocaleDateString()}
                     </span>
                     <Link
                       href={`/sections/${sec?.slug || 'choir'}`}
-                      className="text-blue-600 font-bold hover:underline flex items-center gap-1"
+                      className="text-blue-600 dark:text-blue-400 font-bold hover:underline flex items-center gap-1"
                     >
                       <span>Section Portal</span>
                       <ArrowRight className="w-3 h-3" />
@@ -113,8 +113,8 @@ export default function MySectionsPage() {
       </div>
 
       {/* Applications Status Tracker */}
-      <div className="space-y-4 pt-6 border-t border-slate-200">
-        <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider text-xs">
+      <div className="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <h2 className="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider text-xs">
           Application History & Status Tracker
         </h2>
 
@@ -122,41 +122,41 @@ export default function MySectionsPage() {
           {myApplications.map((app) => (
             <div
               key={app.id}
-              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3"
+              className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-3"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="font-bold text-sm text-slate-900">{app.sectionName} Application</div>
+                <div className="font-bold text-sm text-slate-900 dark:text-white">{app.sectionName} Application</div>
                 <span
                   className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                     app.status === 'APPROVED'
-                      ? 'bg-emerald-100 text-emerald-800'
+                      ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
                       : app.status === 'PENDING'
-                      ? 'bg-amber-100 text-amber-800'
-                      : 'bg-rose-100 text-rose-800'
+                      ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300'
+                      : 'bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300'
                   }`}
                 >
                   {app.status === 'APPROVED' ? 'Approved ✓' : app.status === 'PENDING' ? '🟡 Pending Review' : 'Rejected'}
                 </span>
               </div>
 
-              <div className="text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                <div className="flex flex-wrap items-center gap-3 text-slate-700 font-medium">
-                  <span>Applicant: <strong className="text-slate-900">{app.studentName}</strong></span>
+              <div className="text-xs text-slate-600 dark:text-slate-300 space-y-1.5 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <div className="flex flex-wrap items-center gap-3 text-slate-700 dark:text-slate-300 font-medium">
+                  <span>Applicant: <strong className="text-slate-900 dark:text-white">{app.studentName}</strong></span>
                   <span>• {app.studentDept} (Year {app.studentYear})</span>
                   <span>• {app.gender === 'FEMALE' ? '👩 Female' : '👨 Male'}</span>
                   <span>• Tel: {app.phoneNumber}</span>
                 </div>
-                <div><span className="font-semibold text-slate-700">Motivation:</span> &quot;{app.motivation}&quot;</div>
+                <div><span className="font-semibold text-slate-700 dark:text-slate-300">Motivation:</span> &quot;{app.motivation}&quot;</div>
                 {app.skillsExperience && (
-                  <div><span className="font-semibold text-slate-700">Skills / Talents:</span> {app.skillsExperience}</div>
+                  <div><span className="font-semibold text-slate-700 dark:text-slate-300">Skills / Talents:</span> {app.skillsExperience}</div>
                 )}
                 <div>
-                  <span className="font-semibold text-slate-700">Availability:</span> {app.availabilityDays.join(', ')}
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">Availability:</span> {app.availabilityDays.join(', ')}
                 </div>
               </div>
 
               {app.reviewerNotes && (
-                <div className="bg-blue-50 border border-blue-200 p-3 rounded-xl text-xs text-blue-900 font-medium">
+                <div className="bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 p-3 rounded-2xl text-xs text-blue-900 dark:text-blue-200 font-medium">
                   Leader Feedback: &quot;{app.reviewerNotes}&quot;
                 </div>
               )}
@@ -167,4 +167,3 @@ export default function MySectionsPage() {
     </div>
   );
 }
-

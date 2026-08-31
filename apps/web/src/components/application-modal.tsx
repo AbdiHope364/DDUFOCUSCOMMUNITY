@@ -11,12 +11,9 @@ import {
   Send,
   User,
   Phone,
-  GraduationCap,
   Building,
   Home,
-  HeartHandshake,
-  Sparkles,
-  Shield
+  Sparkles
 } from 'lucide-react';
 
 interface ApplicationModalProps {
@@ -102,18 +99,19 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
     }
 
     setIsSubmitting(true);
+
     const res = store.applyToSection({
       sectionId: section.id,
-      studentName,
-      studentDept: department,
-      studentYear: Number(yearLevel),
+      studentName: studentName.trim(),
       gender,
-      phoneNumber,
-      studentIdNumber,
-      dormInfo,
-      spiritualBackground,
-      motivation,
-      skillsExperience,
+      studentIdNumber: studentIdNumber.trim(),
+      studentDept: department,
+      studentYear: yearLevel,
+      phoneNumber: phoneNumber.trim(),
+      dormInfo: dormInfo.trim(),
+      spiritualBackground: spiritualBackground.trim(),
+      motivation: motivation.trim(),
+      skillsExperience: skillsExperience.trim(),
       experienceLevel,
       availabilityDays,
     });
@@ -129,26 +127,26 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-white text-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
+      <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 dark:border-slate-800 max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-100 transition"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center gap-3.5 pb-4 border-b border-slate-100">
+        <div className="flex items-center gap-3.5 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
             {section.name.charAt(0)}
           </div>
           <div>
-            <h3 className="text-lg font-black text-slate-900 flex items-center gap-1.5">
+            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-1.5">
               <span>Section Membership Registration:</span>
-              <span className="text-blue-600">{section.name}</span>
+              <span className="text-blue-600 dark:text-blue-400">{section.name}</span>
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Please complete your student profile and ministry details. Reviewed directly by {section.name} leadership.
             </p>
           </div>
@@ -159,14 +157,14 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
           <div
             className={`my-4 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 ${
               feedback.success
-                ? 'bg-emerald-50 text-emerald-900 border border-emerald-300'
-                : 'bg-rose-50 text-rose-900 border border-rose-300'
+                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-800'
+                : 'bg-rose-50 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 border border-rose-300 dark:border-rose-800'
             }`}
           >
             {feedback.success ? (
-              <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+              <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
             ) : (
-              <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+              <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
             )}
             <span className="font-medium leading-relaxed">{feedback.message}</span>
           </div>
@@ -174,16 +172,16 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
 
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           {/* PART 1: STUDENT PERSONAL & ACADEMIC INFORMATION */}
-          <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80 space-y-4">
-            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-blue-800">
-              <User className="w-4 h-4 text-blue-600" />
+          <div className="bg-slate-50 dark:bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 space-y-4">
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-blue-700 dark:text-blue-400">
+              <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span>1. Student Identity & Academic Profile</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               {/* Full Name */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Full Name <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -192,13 +190,13 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                   value={studentName}
                   onChange={(e) => setStudentName(e.target.value)}
                   placeholder="e.g. Abdi Tesfaye"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium"
                 />
               </div>
 
               {/* Sex / Gender */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Sex / Gender <span className="text-rose-500">*</span>
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -208,7 +206,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     className={`py-2 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5 border ${
                       gender === 'MALE'
                         ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     <span>👨 Male</span>
@@ -219,7 +217,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     className={`py-2 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5 border ${
                       gender === 'FEMALE'
                         ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
-                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100'
+                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     <span>👩 Female</span>
@@ -229,7 +227,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
 
               {/* Student ID Number */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   DDU Student ID Number <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -238,13 +236,13 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                   value={studentIdNumber}
                   onChange={(e) => setStudentIdNumber(e.target.value)}
                   placeholder="e.g. DDU/R/1042/15"
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-mono"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono"
                 />
               </div>
 
               {/* Phone Number */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Phone Number (Telegram / Calling) <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -255,20 +253,20 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder="e.g. +251 91 123 4567"
-                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium"
+                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium"
                   />
                 </div>
               </div>
 
               {/* Department */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Department / Field of Study <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium"
                 >
                   {DDU_DEPARTMENTS.map((dept) => (
                     <option key={dept} value={dept}>
@@ -280,13 +278,13 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
 
               {/* Year Level */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Academic Year Level <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={yearLevel}
                   onChange={(e) => setYearLevel(Number(e.target.value))}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white font-medium"
+                  className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-medium"
                 >
                   <option value={1}>1st Year (Freshman)</option>
                   <option value={2}>2nd Year</option>
@@ -299,7 +297,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
 
               {/* Dorm Location */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Campus Dormitory / Residence Info
                 </label>
                 <div className="relative">
@@ -309,14 +307,14 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     value={dormInfo}
                     onChange={(e) => setDormInfo(e.target.value)}
                     placeholder="e.g. Block 43, Room 204 or Non-Dorm"
-                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               {/* Spiritual Background / Home Church */}
               <div>
-                <label className="block font-bold text-slate-700 mb-1">
+                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Home Church / Fellowship Background
                 </label>
                 <div className="relative">
@@ -326,7 +324,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     value={spiritualBackground}
                     onChange={(e) => setSpiritualBackground(e.target.value)}
                     placeholder="e.g. Full Gospel, Kale Heywet, Mulu Wongel"
-                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                    className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
@@ -334,15 +332,15 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
           </div>
 
           {/* PART 2: MINISTRY MOTIVATION & AVAILABILITY */}
-          <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80 space-y-4">
-            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-indigo-800">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
+          <div className="bg-slate-50 dark:bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 space-y-4">
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-400">
+              <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               <span>2. Ministry Calling, Skills & Availability</span>
             </div>
 
             {/* Motivation */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Why would you like to join {section.name}? <span className="text-rose-500">*</span>
               </label>
               <textarea
@@ -351,13 +349,13 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                 value={motivation}
                 onChange={(e) => setMotivation(e.target.value)}
                 placeholder="Share your spiritual desire, passion, and how you wish to serve fellow students..."
-                className="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
               />
             </div>
 
             {/* Relevant Skills & Experience */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                 Relevant Skills, Talents & Ministry Experience
               </label>
               <textarea
@@ -365,13 +363,13 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                 value={skillsExperience}
                 onChange={(e) => setSkillsExperience(e.target.value)}
                 placeholder="e.g. Vocal tenor, acoustic guitar, sound mixer, evangelism tracts, event logistics, charity drives..."
-                className="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                className="w-full text-xs p-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
               />
             </div>
 
             {/* Experience Level */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                 Experience Level in this Field
               </label>
               <div className="grid grid-cols-3 gap-2 text-xs">
@@ -383,7 +381,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                     className={`py-2 px-3 rounded-xl font-bold border text-center transition capitalize ${
                       experienceLevel === lvl
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                        : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     {lvl.toLowerCase()}
@@ -394,8 +392,8 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
 
             {/* Weekly Availability Checkboxes */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-blue-600" />
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 <span>Weekly Availability (Select days you are free for rehearsals/meetings)</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -409,7 +407,7 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
                       className={`py-2 px-2.5 rounded-xl text-[11px] font-bold border text-center transition flex items-center justify-between ${
                         isSelected
                           ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                          : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
                       <span>{day}</span>
@@ -422,11 +420,11 @@ export function ApplicationModal({ section, onClose }: ApplicationModalProps) {
           </div>
 
           {/* Submit Action Buttons */}
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-3">
+          <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition"
+              className="px-4 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition"
             >
               Cancel
             </button>
