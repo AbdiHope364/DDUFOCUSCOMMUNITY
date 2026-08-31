@@ -6,10 +6,14 @@ import { Persona } from '../types';
 import { Users, Shield, Award, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export function PersonaSwitcher() {
+  const [mounted, setMounted] = useState(false);
   const [activePersona, setActivePersona] = useState<Persona>(store.activePersona);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    store.initClient();
+    setActivePersona(store.activePersona);
     const unsub = store.subscribe(() => {
       setActivePersona(store.activePersona);
     });

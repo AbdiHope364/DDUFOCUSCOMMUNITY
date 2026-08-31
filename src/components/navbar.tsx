@@ -29,6 +29,9 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    store.initClient();
+    setActivePersona(store.activePersona);
+    setNotifications([...store.notifications]);
     const unsub = store.subscribe(() => {
       setActivePersona(store.activePersona);
       setNotifications([...store.notifications]);

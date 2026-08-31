@@ -51,11 +51,10 @@ class FocusStore {
 
   private listeners: Set<() => void> = new Set();
 
+  private hasHydrated = false;
+
   private constructor() {
     this.isBrowser = typeof window !== 'undefined';
-    if (this.isBrowser) {
-      this.loadFromStorage();
-    }
   }
 
   public static getInstance(): FocusStore {
@@ -63,6 +62,13 @@ class FocusStore {
       FocusStore.instance = new FocusStore();
     }
     return FocusStore.instance;
+  }
+
+  public initClient() {
+    if (!this.isBrowser || this.hasHydrated) return;
+    this.hasHydrated = true;
+    this.loadFromStorage();
+    this.notify();
   }
 
   private saveToStorage() {

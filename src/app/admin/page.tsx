@@ -23,6 +23,7 @@ export default function AdminDashboardPage() {
   const [, setRerender] = useState(0);
 
   useEffect(() => {
+    store.initClient();
     const unsub = store.subscribe(() => setRerender((v) => v + 1));
     return unsub;
   }, []);
