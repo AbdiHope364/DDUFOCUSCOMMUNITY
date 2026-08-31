@@ -61,16 +61,20 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-amber-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition transform">
-              <Flame className="w-6 h-6 fill-amber-300 text-amber-300 animate-pulse-subtle" />
+            <div className="w-11 h-11 rounded-full overflow-hidden bg-white shadow-md border border-slate-200 flex items-center justify-center p-0.5 group-hover:scale-105 transition transform shrink-0">
+              <img
+                src="/logo.png"
+                alt="DDU FOCUS Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
-              <div className="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1">
+              <div className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight flex items-center gap-1">
                 <span>DDU</span>
                 <span className="text-blue-600 font-black">FOCUS</span>
               </div>
-              <p className="text-[10px] text-slate-500 font-medium tracking-wide uppercase">
-                Student Fellowship Platform
+              <p className="text-[9px] sm:text-[10px] text-slate-500 font-semibold tracking-wider uppercase">
+                Student Fellowship
               </p>
             </div>
           </Link>

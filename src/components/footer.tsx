@@ -9,19 +9,28 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
           {/* Col 1: Brand & Mission */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-amber-500 flex items-center justify-center text-white shadow-md">
-                <Flame className="w-5 h-5 fill-amber-300 text-amber-300" />
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-md border border-slate-700 shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="DDU FOCUS Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <div className="font-bold text-lg text-white tracking-tight">
-                DDU <span className="text-blue-400">FOCUS</span>
+              <div>
+                <div className="font-extrabold text-base text-white tracking-tight">
+                  DDU <span className="text-blue-400">FOCUS</span>
+                </div>
+                <p className="text-[10px] text-amber-400 font-semibold tracking-wider uppercase">
+                  Student Fellowship
+                </p>
               </div>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
               Fellowship of Christian University Students at Dire Dawa University. Raising disciples of Jesus Christ who shine in academics, campus life, and societal leadership.
             </p>
             <div className="text-xs text-amber-400 font-medium flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4" /> &quot;Be strong and courageous.&quot; — Joshua 1:9
+              <Sparkles className="w-4 h-4" /> &quot;Knowing Christ, Growing Together, Serving Others&quot; — Matt 5:16
             </div>
           </div>
 

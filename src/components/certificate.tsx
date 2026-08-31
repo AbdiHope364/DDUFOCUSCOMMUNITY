@@ -49,17 +49,21 @@ export function Certificate({
 
         {/* Fellowship Header */}
         <div className="flex flex-col items-center space-y-2 pb-6 border-b-2 border-amber-600/30">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-amber-500 flex items-center justify-center text-white shadow-md">
-            <Flame className="w-8 h-8 fill-amber-300 text-amber-300" />
+          <div className="w-16 h-16 rounded-full overflow-hidden bg-white p-0.5 shadow-md border border-amber-500/40 shrink-0">
+            <img
+              src="/logo.png"
+              alt="DDU FOCUS Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
           <h1 className="font-sans font-extrabold text-sm sm:text-base uppercase tracking-widest text-slate-800">
             DIRE DAWA UNIVERSITY
           </h1>
-          <h2 className="font-sans font-bold text-xs uppercase tracking-widest text-blue-700">
+          <h2 className="font-sans font-black text-xs uppercase tracking-widest text-blue-800">
             FELLOWSHIP OF CHRISTIAN UNIVERSITY STUDENTS (DDU FOCUS)
           </h2>
-          <p className="font-sans text-[10px] text-slate-500 uppercase tracking-wider">
-            Ministry of Compassion, Charity & Campus Leadership
+          <p className="font-sans text-[10px] text-amber-700 font-semibold uppercase tracking-wider">
+            &quot;Knowing Christ, Growing Together, Serving Others&quot; — Matthew 5:16
           </p>
         </div>
 

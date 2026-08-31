@@ -42,13 +42,23 @@ export default function HomePage() {
         <div className="absolute top-10 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto relative z-10 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/60 border border-blue-700/50 text-blue-300 text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-sm">
-            <Flame className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span>Dire Dawa University Christian Student Fellowship</span>
+          {/* Official Fellowship Logo Avatar */}
+          <div className="flex flex-col items-center justify-center gap-3">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white p-1 shadow-2xl ring-4 ring-amber-400/50 flex items-center justify-center animate-in zoom-in">
+              <img
+                src="/logo.png"
+                alt="Dire Dawa University FOCUS Student Fellowship Logo"
+                className="w-full h-full object-contain rounded-full"
+              />
+            </div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/70 border border-blue-700/60 text-blue-200 text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>Dire Dawa University Christian Student Fellowship</span>
+            </div>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight max-w-4xl mx-auto">
-            United in Faith, Shining in Academic & Spiritual Excellence
+            Knowing Christ, Growing Together, Serving Others
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
